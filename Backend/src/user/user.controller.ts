@@ -7,6 +7,7 @@ import {
   HttpCode,
   HttpStatus,
   Delete,
+  Post,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { UpdateProfileDto } from './dto/update-user.dto';
@@ -31,4 +32,14 @@ export class UserController {
     const userId = req.user?.id;
     return await this.userService.deleteUser(userId);
   }
+
+@Post('signout')
+@UseGuards(JwtAuthGuard)
+signout() {
+  return {
+    message: 'Signout successful',
+    success: true,
+  };
+}
+
 }
