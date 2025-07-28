@@ -6,6 +6,7 @@ import {
   UseGuards,
   HttpCode,
   HttpStatus,
+  Delete,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { UpdateProfileDto } from './dto/update-user.dto';
@@ -21,5 +22,13 @@ export class UserController {
   async updateProfile(@Request() req, @Body() updateDto: UpdateProfileDto) {
     const userId = req.user?.id;
     return await this.userService.updateProfile(userId, updateDto);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete('delete-account')
+  @HttpCode(HttpStatus.OK)
+  async deleteUser(@Request() req) {
+    const userId = req.user?.id;
+    return await this.userService.deleteUser(userId);
   }
 }

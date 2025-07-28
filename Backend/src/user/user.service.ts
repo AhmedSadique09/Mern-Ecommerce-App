@@ -48,4 +48,24 @@ export class UserService {
   }
 }
 
+async deleteUser(userId: string) {
+    try {
+      const deletedUser = await this.userModel.findByIdAndDelete(userId);
+
+      if (!deletedUser) {
+        throw errorHandler(HttpStatus.NOT_FOUND, 'User not found');
+      }
+
+      return {
+        message: 'User account deleted successfully',
+      };
+    } catch (error) {
+      throw errorHandler(
+        HttpStatus.INTERNAL_SERVER_ERROR,
+        'Failed to delete user account',
+        error.message
+      );
+    }
+  }
+
 }
