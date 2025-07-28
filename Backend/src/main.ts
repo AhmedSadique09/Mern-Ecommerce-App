@@ -1,11 +1,15 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { connectDB } from './config/database.module';
+import { LoggerMiddleware } from './common/middleware/logger.middleware';
 
 async function bootstrap() {
   await connectDB(); // MongoDB connection establish karo
 
   const app = await NestFactory.create(AppModule);
+
+  app.use(new LoggerMiddleware().use);
+  
   app.enableCors({
     origin: 'http://localhost:5173',
     credentials: true,
