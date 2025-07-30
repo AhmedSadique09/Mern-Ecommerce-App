@@ -12,6 +12,7 @@ import { errorHandler } from '../common/utils/error.utils';
 export class AuthService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
+  // 🟢 Signup
   async signup(signupDto: SignupDto): Promise<{ message: string }> {
     try {
       const { username, email, password } = signupDto;
@@ -21,16 +22,18 @@ export class AuthService {
         throw errorHandler(
           HttpStatus.CONFLICT,
           'User already exists',
-          'Email already registered'
+          'Email already registered',
         );
       }
 
       const hashedPassword = await bcrypt.hash(password, 10);
 
+      // 🔹 By default every user is role = "user"
       const newUser = new this.userModel({
         username,
         email,
         password: hashedPassword,
+        roles: ['user'],
       });
 
       await newUser.save();
@@ -40,11 +43,12 @@ export class AuthService {
       throw errorHandler(
         HttpStatus.INTERNAL_SERVER_ERROR,
         'Something went wrong during signup',
-        error.message
+        error.message,
       );
     }
   }
 
+  // 🟢 Signin
   async signin(signinDto: SigninDto): Promise<{ token: string; user: any }> {
     try {
       const { email, password } = signinDto;
@@ -54,7 +58,7 @@ export class AuthService {
         throw errorHandler(
           HttpStatus.UNAUTHORIZED,
           'Invalid credentials',
-          'Email not found'
+          'Email not found',
         );
       }
 
@@ -63,7 +67,7 @@ export class AuthService {
         throw errorHandler(
           HttpStatus.UNAUTHORIZED,
           'Invalid credentials',
-          'Password mismatch'
+          'Password mismatch',
         );
       }
 
@@ -74,8 +78,9 @@ export class AuthService {
         );
       }
 
+      // 🔹 Store roles in JWT payload instead of only isAdmin
       const token = jwt.sign(
-        { id: user._id, isAdmin: user.isAdmin },
+        { id: user._id, roles: user.roles },
         process.env.JWT_SECRET as string,
         { expiresIn: '7d' },
       );
@@ -90,7 +95,7 @@ export class AuthService {
       throw errorHandler(
         HttpStatus.INTERNAL_SERVER_ERROR,
         'Something went wrong during signin',
-        error.message
+        error.message,
       );
     }
   }

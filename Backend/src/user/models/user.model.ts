@@ -20,8 +20,8 @@ export class User {
   })
   profilePicture: string;
 
-  @Prop({ default: false })
-  isAdmin: boolean;
+  @Prop({ type: [String], enum: ['user', 'admin'], default: ['user'] })
+  roles: string[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

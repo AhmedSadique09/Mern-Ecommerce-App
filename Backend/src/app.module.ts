@@ -7,6 +7,7 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { CloudinaryModule } from './helper/cloudinary/cloudinary.module';
+import { ProductModule } from './Products/product.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { CloudinaryModule } from './helper/cloudinary/cloudinary.module';
     AuthModule,
     UserModule,
     CloudinaryModule,
+     ProductModule,
   ],
   controllers: [AppController],
   providers: [AppService],
