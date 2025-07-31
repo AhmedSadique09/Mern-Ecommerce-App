@@ -78,5 +78,10 @@ export class ProductController {
     return this.productService.getProductDetails(id);
   }
 
+  // Search Products
+  @Get('search/:keyword')
+  async searchProducts(@Param('keyword') keyword: string) {
+    return this.productService.searchProducts(keyword);
+  }
 
 }

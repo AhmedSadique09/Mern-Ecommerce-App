@@ -158,6 +158,36 @@ export class ProductService {
       );
     }
   }
+
+  //  Search Products
+  async searchProducts(keyword: string) {
+    try {
+      if (!keyword || typeof keyword !== 'string') {
+        throw errorHandler(HttpStatus.BAD_REQUEST, 'Keyword is required');
+      }
+
+      const regEx = new RegExp(keyword, 'i'); // case-insensitive search
+
+      const searchQuery = {
+        $or: [
+          { title: regEx },
+          { description: regEx },
+          { category: regEx },
+          { brand: regEx },
+        ],
+      };
+
+      const results = await this.productModel.find(searchQuery);
+
+      return { success: true, data: results };
+    } catch (error) {
+      throw errorHandler(
+        HttpStatus.INTERNAL_SERVER_ERROR,
+        'Failed to search products',
+        error.message,
+      );
+    }
+  }
 }
 
 
