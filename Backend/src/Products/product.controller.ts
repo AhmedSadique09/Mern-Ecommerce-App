@@ -11,6 +11,7 @@ import {
   HttpCode,
   HttpStatus,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ProductService } from './product.service';
@@ -19,6 +20,7 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { RolesGuard } from 'src/common/guards/roles.guard';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Roles } from 'src/common/decorators/roles.decorator';
+import { FilterProductDto } from './dto/filter-product.dto';
 
 @Controller('products')
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -63,4 +65,18 @@ export class ProductController {
   async deleteProduct(@Param('id') id: string) {
     return this.productService.deleteProduct(id);
   }
+
+    //  Filter Products
+  @Get('filter')
+  async getFilteredProducts(@Query() query: FilterProductDto) {
+    return this.productService.getFilteredProducts(query);
+  }
+
+  //  Product Details
+  @Get(':id')
+  async getProductDetails(@Param('id') id: string) {
+    return this.productService.getProductDetails(id);
+  }
+
+
 }

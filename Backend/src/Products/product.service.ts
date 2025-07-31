@@ -12,7 +12,7 @@ export class ProductService {
   constructor(
     @InjectModel(Product.name) private productModel: Model<ProductDocument>,
     private readonly cloudinaryService: CloudinaryService,
-  ) {}
+  ) { }
 
   // Upload Image
   async uploadImage(file: Express.Multer.File) {
@@ -98,4 +98,66 @@ export class ProductService {
       );
     }
   }
+
+  //  Get Filtered Products
+  async getFilteredProducts(query: any) {
+    try {
+      const { category = '', brand = '', sortBy = 'price-lowtohigh' } = query;
+
+      let filters: any = {};
+      if (category.length) {
+        filters.category = { $in: category.split(',').map(c => new RegExp(`^${c}$`, 'i')) };
+      }
+
+      if (brand.length) {
+        filters.brand = { $in: brand.split(',').map(b => new RegExp(`^${b}$`, 'i')) };
+      }
+
+      let sort: any = {};
+      switch (sortBy.toLowerCase()) {
+        case 'price-lowtohigh':
+          sort.price = 1;
+          break;
+        case 'price-hightolow':
+          sort.price = -1;
+          break;
+        case 'price-atoz':
+          sort.title = 1;
+          break;
+        case 'price-ztoa':
+          sort.title = -1;
+          break;
+        default:
+          sort.price = 1;
+      }
+
+      const products = await this.productModel.find(filters).sort(sort);
+      return { success: true, data: products };
+    } catch (error) {
+      throw errorHandler(
+        HttpStatus.INTERNAL_SERVER_ERROR,
+        'Failed to fetch filtered products',
+        error.message,
+      );
+    }
+  }
+
+  // Product Details
+  async getProductDetails(id: string) {
+    try {
+      const product = await this.productModel.findById(id);
+      if (!product) {
+        throw errorHandler(HttpStatus.NOT_FOUND, 'Product Not Found');
+      }
+      return { success: true, data: product };
+    } catch (error) {
+      throw errorHandler(
+        HttpStatus.INTERNAL_SERVER_ERROR,
+        'Failed to fetch product details',
+        error.message,
+      );
+    }
+  }
 }
+
+
