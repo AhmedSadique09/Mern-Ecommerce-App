@@ -106,11 +106,11 @@ export class ProductService {
 
       let filters: any = {};
       if (category.length) {
-        filters.category = { $in: category.split(',').map(c => new RegExp(`^${c}$`, 'i')) };
+        filters.category = { $in: category.split(',').map((c: string) => new RegExp(`^${c}$`, 'i')) };
       }
 
       if (brand.length) {
-        filters.brand = { $in: brand.split(',').map(b => new RegExp(`^${b}$`, 'i')) };
+        filters.brand = { $in: brand.split(',').map((b: string) => new RegExp(`^${b}$`, 'i')) };
       }
 
       let sort: any = {};
