@@ -1,4 +1,3 @@
-// app.module.ts
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -11,6 +10,7 @@ import { ProductModule } from './Products/product.module';
 import { CartModule } from './Cart/cart.module';
 import { AddressModule } from './addressDetails/address.module';
 import { OrderModule } from './order/order.module';
+import { FeatureModule } from './featureimage/feature.module';
 
 @Module({
   imports: [
@@ -23,6 +23,7 @@ import { OrderModule } from './order/order.module';
     CartModule,
     AddressModule,
     OrderModule,
+    FeatureModule,
   ],
   controllers: [AppController],
   providers: [AppService],
