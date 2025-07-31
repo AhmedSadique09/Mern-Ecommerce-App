@@ -9,9 +9,9 @@ import { CloudinaryModule } from '../helper/cloudinary/cloudinary.module';
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
-    CloudinaryModule, // 👈 CloudinaryModule ko inject karo
+    CloudinaryModule,
   ],
   providers: [UserService],
   controllers: [UserController],
 })
-export class UserModule {}
+export class UserModule { }

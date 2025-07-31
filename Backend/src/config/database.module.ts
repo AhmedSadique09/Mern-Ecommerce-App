@@ -9,6 +9,6 @@ export const connectDB = async () => {
     await mongoose.connect(`${process.env.MONGODB_URI}`);
   } catch (error) {
     console.error('MongoDB connection failed:', error);
-    process.exit(1); // Agar connection fail ho jaye to process exit kar do
+    process.exit(1);
   }
 };

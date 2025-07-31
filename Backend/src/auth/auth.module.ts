@@ -9,4 +9,4 @@ import { User, UserSchema } from '../user/models/user.model';
   controllers: [AuthController],
   providers: [AuthService],
 })
-export class AuthModule {}
+export class AuthModule { }

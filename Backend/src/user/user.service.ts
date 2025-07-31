@@ -12,7 +12,7 @@ export class UserService {
   constructor(
     @InjectModel(User.name) private userModel: Model<UserDocument>,
     private readonly cloudinaryService: CloudinaryService,
-  ) {}
+  ) { }
 
   async updateProfile(
     userId: string,

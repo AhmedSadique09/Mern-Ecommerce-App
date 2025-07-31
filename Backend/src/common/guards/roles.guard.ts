@@ -4,7 +4,7 @@ import { ROLES_KEY } from '../decorators/roles.decorator';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
-  constructor(private reflector: Reflector) {}
+  constructor(private reflector: Reflector) { }
 
   canActivate(context: ExecutionContext): boolean {
     const requiredRoles = this.reflector.getAllAndOverride<string[]>(ROLES_KEY, [
@@ -16,12 +16,10 @@ export class RolesGuard implements CanActivate {
 
     const { user } = context.switchToHttp().getRequest();
 
-    // ✅ Agar user ke paas roles array hai
     if (user?.roles && Array.isArray(user.roles)) {
       return requiredRoles.some((role) => user.roles.includes(role));
     }
 
-    // ✅ Agar purana "isAdmin" boolean use ho raha hai
     if (user?.isAdmin && requiredRoles.includes('admin')) {
       return true;
     }

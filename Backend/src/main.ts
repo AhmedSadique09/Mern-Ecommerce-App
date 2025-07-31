@@ -5,7 +5,7 @@ import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
-  await connectDB(); 
+  await connectDB();
 
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());

@@ -10,9 +10,9 @@ import { errorHandler } from '../common/utils/error.utils';
 
 @Injectable()
 export class AuthService {
-  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
+  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) { }
 
-  // 🟢 Signup
+  // Signup
   async signup(signupDto: SignupDto): Promise<{ message: string }> {
     try {
       const { username, email, password } = signupDto;
@@ -28,7 +28,6 @@ export class AuthService {
 
       const hashedPassword = await bcrypt.hash(password, 10);
 
-      // 🔹 By default every user is role = "user"
       const newUser = new this.userModel({
         username,
         email,
@@ -48,7 +47,7 @@ export class AuthService {
     }
   }
 
-  // 🟢 Signin
+  // Signin
   async signin(signinDto: SigninDto): Promise<{ token: string; user: any }> {
     try {
       const { email, password } = signinDto;
@@ -78,7 +77,6 @@ export class AuthService {
         );
       }
 
-      // 🔹 Store roles in JWT payload instead of only isAdmin
       const token = jwt.sign(
         { id: user._id, roles: user.roles },
         process.env.JWT_SECRET as string,

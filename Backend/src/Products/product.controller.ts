@@ -25,7 +25,7 @@ import { FilterProductDto } from './dto/filter-product.dto';
 @Controller('products')
 @UseGuards(JwtAuthGuard, RolesGuard)
 export class ProductController {
-  constructor(private readonly productService: ProductService) {}
+  constructor(private readonly productService: ProductService) { }
 
   // ✅ Upload Image
   @Post('upload')
@@ -66,7 +66,7 @@ export class ProductController {
     return this.productService.deleteProduct(id);
   }
 
-    //  Filter Products
+  //  Filter Products
   @Get('filter')
   async getFilteredProducts(@Query() query: FilterProductDto) {
     return this.productService.getFilteredProducts(query);

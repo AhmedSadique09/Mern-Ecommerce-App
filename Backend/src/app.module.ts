@@ -28,4 +28,4 @@ import { FeatureModule } from './featureimage/feature.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }

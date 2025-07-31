@@ -13,4 +13,4 @@ import { CloudinaryModule } from '../helper/cloudinary/cloudinary.module';
   controllers: [ProductController],
   providers: [ProductService],
 })
-export class ProductModule {}
+export class ProductModule { }

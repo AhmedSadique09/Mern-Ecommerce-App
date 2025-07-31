@@ -18,7 +18,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
   @UseGuards(JwtAuthGuard)
   @Patch('update-profile')

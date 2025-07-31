@@ -9,7 +9,7 @@ import { errorHandler } from '../common/utils/error.utils';
 export class OrderService {
   constructor(
     @InjectModel(Order.name) private orderModel: Model<OrderDocument>,
-  ) {}
+  ) { }
 
   async createOrder(createOrderDto: CreateOrderDto) {
     try {
