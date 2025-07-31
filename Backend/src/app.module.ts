@@ -9,6 +9,7 @@ import { UserModule } from './user/user.module';
 import { CloudinaryModule } from './helper/cloudinary/cloudinary.module';
 import { ProductModule } from './Products/product.module';
 import { CartModule } from './Cart/cart.module';
+import { AddressModule } from './addressDetails/address.module';
 
 @Module({
   imports: [
@@ -18,7 +19,8 @@ import { CartModule } from './Cart/cart.module';
     UserModule,
     CloudinaryModule,
     ProductModule,
-    CartModule
+    CartModule,
+    AddressModule,
   ],
   controllers: [AppController],
   providers: [AppService],
